@@ -61,7 +61,7 @@ int main( int argc, char* argv[] )
 		mctsAccurate->setSimulationDepth( 1000 );
 
 		MCTS* mctsFast = new MCTS( 1 / sqrtf( 2.0f ), false );
-		mctsFast->setComputationalBudget( 500 );
+		mctsFast->setComputationalBudget( 1000 );
 		mctsFast->setSimulationDepth( 1000 );
 
 		RandomSearch* randomSearch = new RandomSearch();
