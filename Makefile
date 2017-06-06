@@ -1,2 +1,2 @@
 all:
-	g++ *.cpp -O2 -o Release/mcts-backgammon.out
+	g++ *.cpp -O2 -o Release/mcts-test-environment.out
