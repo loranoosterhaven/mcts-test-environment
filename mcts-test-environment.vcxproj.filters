@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="search.cpp">
+      <Filter>Search</Filter>
+    </ClCompile>
+    <ClCompile Include="randomsearch.cpp">
+      <Filter>Search</Filter>
+    </ClCompile>
+    <ClCompile Include="state.cpp">
+      <Filter>State</Filter>
+    </ClCompile>
+    <ClCompile Include="tictactoestate.cpp">
+      <Filter>State</Filter>
+    </ClCompile>
+    <ClCompile Include="backgammonstate.cpp">
+      <Filter>State</Filter>
+    </ClCompile>
+    <ClCompile Include="depthlimitedminimax.cpp">
+      <Filter>Search\Minimax</Filter>
+    </ClCompile>
+    <ClCompile Include="expectiminimax.cpp">
+      <Filter>Search\Minimax</Filter>
+    </ClCompile>
+    <ClCompile Include="minimax.cpp">
+      <Filter>Search\Minimax</Filter>
+    </ClCompile>
+    <ClCompile Include="mcts.cpp">
+      <Filter>Search\MCTS</Filter>
+    </ClCompile>
+    <ClCompile Include="node.cpp">
+      <Filter>Search\MCTS</Filter>
+    </ClCompile>
+    <ClCompile Include="nimstate.cpp">
+      <Filter>State</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="search.h">
+      <Filter>Search</Filter>
+    </ClInclude>
+    <ClInclude Include="randomsearch.h">
+      <Filter>Search</Filter>
+    </ClInclude>
+    <ClInclude Include="state.h">
+      <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="tictactoestate.h">
+      <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="backgammonstate.h">
+      <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="depthlimitedminimax.h">
+      <Filter>Search\Minimax</Filter>
+    </ClInclude>
+    <ClInclude Include="expectiminimax.h">
+      <Filter>Search\Minimax</Filter>
+    </ClInclude>
+    <ClInclude Include="minimax.h">
+      <Filter>Search\Minimax</Filter>
+    </ClInclude>
+    <ClInclude Include="mcts.h">
+      <Filter>Search\MCTS</Filter>
+    </ClInclude>
+    <ClInclude Include="node.h">
+      <Filter>Search\MCTS</Filter>
+    </ClInclude>
+    <ClInclude Include="nimstate.h">
+      <Filter>State</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LICENSE" />
+    <None Include="Makefile" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Search">
+      <UniqueIdentifier>{c670e412-4b3b-47c1-baf3-aa9a787accdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State">
+      <UniqueIdentifier>{ade0a980-04c2-4bff-baea-29eff500345f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Search\MCTS">
+      <UniqueIdentifier>{aa846357-48ef-42e5-b064-03be60167561}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Search\Minimax">
+      <UniqueIdentifier>{55df7035-7a55-4ee8-b5aa-93d0d6ffb72d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

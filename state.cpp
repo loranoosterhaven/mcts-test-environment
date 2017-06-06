@@ -6,10 +6,10 @@
 
 void State::destroyActions( std::vector<Action*>* actions, Action* toKeep )
 {
-	for( std::vector<Action*>::iterator it = actions->begin(); it != actions->end(); it++ )
+	for( int i = 0; i < ( int )actions->size(); i++ )
 	{
-		if( *it != toKeep )
-			delete *it;
+		if( ( *actions )[i] != toKeep )
+			delete ( *actions )[i];
 	}
 
 	actions->clear();
@@ -20,7 +20,7 @@ Action* State::getRandomAction()
 	if( turn == PLAYER_CHANCE )
 		return getProbabilisticAction();
 
-	std::vector<Action*> actions;
+	std::vector<Action*> actions( MAX_ACTIONS );
 	computeActions( &actions );
 
 	Action* targetAction = actions[rand() % actions.size()];
@@ -36,15 +36,13 @@ Action* State::getProbabilisticAction()
 	float randomFloat = ( float )rand() / RAND_MAX;
 	float cumulativeProb = 0.0f;
 
-	std::vector<Action*> actions;
+	std::vector<Action*> actions( MAX_ACTIONS );
 	computeActions( &actions );
 	
-	for( std::vector<Action*>::iterator it = actions.begin(); it != actions.end(); it++ )
+	for( int i = 0; i < ( int )actions.size(); i++ )
 	{
-		Action* action = *it;
-
-		bestAction = action;
-		cumulativeProb += action->probability;
+		bestAction = actions[i];
+		cumulativeProb += actions[i]->probability;
 
 		if( cumulativeProb >= randomFloat )
 			break;

@@ -18,13 +18,13 @@ Node::Node( State* state, Node* parent, Action* appliedAction )
 
 Node::~Node()
 {
-	if( appliedAction != NULL )
-		delete appliedAction;
+	for( int i = 0; i < ( int )actions.size(); i++ )
+		delete actions[i];
 
 	actions.clear();
 
-	for (std::vector<Node*>::iterator it = children.begin(); it != children.end(); it++ )
-		delete *it;
+	for( int i = 0; i < ( int )children.size(); i++ )
+		delete children[i];
 
 	children.clear();
 

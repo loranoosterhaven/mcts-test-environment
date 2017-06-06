@@ -46,7 +46,7 @@ int main( int argc, char* argv[] )
 {
 	srand( ( unsigned int )std::time( NULL ) );
 
-	int maxGames = 10;
+	int maxGames = 50;
 	int numGames = 0;
 	int wins[2] = { 0, 0 };
 
@@ -54,14 +54,14 @@ int main( int argc, char* argv[] )
 
 	while( numGames < maxGames )
 	{
-		State* state = new BackgammonState();
+		State* state = new NimState( 100 );
 
-		MCTS* mctsAccurate = new MCTS();
-		mctsAccurate->setComputationalBudget( 40 );
+		MCTS* mctsAccurate = new MCTS( 1 / sqrtf( 2.0f ), false );
+		mctsAccurate->setComputationalBudget( 20000 );
 		mctsAccurate->setSimulationDepth( 1000 );
 
-		MCTS* mctsFast = new MCTS();
-		mctsFast->setComputationalBudget( 20 );
+		MCTS* mctsFast = new MCTS( 1 / sqrtf( 2.0f ), false );
+		mctsFast->setComputationalBudget( 500 );
 		mctsFast->setSimulationDepth( 1000 );
 
 		RandomSearch* randomSearch = new RandomSearch();

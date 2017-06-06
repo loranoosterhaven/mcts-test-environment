@@ -4,13 +4,6 @@
 
 #include "stdafx.h"
 
-MCTS::MCTS()
-{
-	computationalBudget = 0;
-	simulationDepth = 0;
-	positiveConstant = 1.0f / sqrtf( 2.0f );
-}
-
 SearchResult* MCTS::search( State* state )
 {
 	// Create root node from target state.
@@ -20,9 +13,11 @@ SearchResult* MCTS::search( State* state )
 	std::clock_t endClock = startClock;
 
 	int computationalBudgetClock = computationalBudget * CLOCKS_PER_SEC / 1000;
+	int numIterations = 0;
 
 	// Run until computational budget is reached.
-	while( endClock - startClock < computationalBudgetClock )
+	while( ( budgetInMs && endClock - startClock < computationalBudgetClock ) 
+		|| ( !budgetInMs && numIterations < computationalBudgetClock ) )
 	{
 		// Select a child according to the tree policy.
 		Node* selection = treePolicy( root );
@@ -34,12 +29,15 @@ SearchResult* MCTS::search( State* state )
 		backup( selection, &deltaValue );
 			
 		endClock = std::clock();
+
+		numIterations++;
 	}
 
 	Node* bestNode = bestChild( root, 0.0f );
 
 	SearchResult* result = new SearchResult();
 	result->bestState = state->clone();
+	result->mctsIterations = numIterations;
 
 	// Store the search results.
 	if( bestNode->getAppliedAction() != NULL )

@@ -72,6 +72,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mcts.cpp" />
     <ClCompile Include="minimax.cpp" />
+    <ClCompile Include="nimstate.cpp" />
     <ClCompile Include="node.cpp" />
     <ClCompile Include="randomsearch.cpp" />
     <ClCompile Include="state.cpp" />
@@ -88,6 +89,7 @@
     <ClInclude Include="expectiminimax.h" />
     <ClInclude Include="mcts.h" />
     <ClInclude Include="minimax.h" />
+    <ClInclude Include="nimstate.h" />
     <ClInclude Include="node.h" />
     <ClInclude Include="randomsearch.h" />
     <ClInclude Include="state.h" />

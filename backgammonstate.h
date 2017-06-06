@@ -69,10 +69,7 @@ public:
 	
 	virtual Action* clone()
 	{
-		BackgammonAction* clonedAction = new BackgammonAction();
-		*clonedAction = *this;
-
-		return clonedAction;
+		return new BackgammonAction( *this );
 	}
 
 	// If either of these is zero, it is a player move and not a dice move.

@@ -8,7 +8,8 @@
 class MCTS : public Search
 {
 public:
-	MCTS();
+	MCTS( float positiveConstant, bool budgetInMs ) : 
+		computationalBudget( 0 ), simulationDepth( 0 ), positiveConstant( positiveConstant ), budgetInMs( budgetInMs ) {}
 
 	virtual SearchResult* search( State* state );
 
@@ -28,6 +29,7 @@ private:
 	int computationalBudget;
 	int simulationDepth;
 	float positiveConstant;
+	bool budgetInMs;
 };
 
 #endif

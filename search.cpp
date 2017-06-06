@@ -14,6 +14,9 @@ void SearchResult::print()
 		bestAction->print();
 	}
 
+	if( mctsIterations != 0 )
+		printf( "Number of simualtions: %d\n", mctsIterations );
+
 	printf( "Best state:\n");
 	bestState->print();
 }

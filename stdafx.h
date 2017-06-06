@@ -25,5 +25,6 @@
 
 #include "tictactoestate.h"
 #include "backgammonstate.h"
+#include "nimstate.h"
 
 #endif

@@ -8,6 +8,9 @@
 class SearchResult
 {
 public:
+	SearchResult() :
+		mctsIterations( 0 ) {} 
+
 	~SearchResult()
 	{
 		if( bestAction != NULL )
@@ -22,6 +25,7 @@ public:
 public:
 	Action* bestAction;
 	State* bestState;
+	int mctsIterations;
 };
 
 class Search

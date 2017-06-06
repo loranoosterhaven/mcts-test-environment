@@ -5,6 +5,8 @@
 #ifndef STATE_H
 #define STATE_H
 
+#define MAX_ACTIONS 20
+
 enum Player
 {
 	PLAYER_NONE = -1,
