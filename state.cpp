@@ -20,10 +20,10 @@ Action* State::getRandomAction()
 	if( turn == PLAYER_CHANCE )
 		return getProbabilisticAction();
 
-	std::vector<Action*> actions( MAX_ACTIONS );
+	std::vector<Action*> actions( NUM_AVERAGE_ACTIONS );
 	computeActions( &actions );
 
-	Action* targetAction = actions[rand() % actions.size()];
+	Action* targetAction = actions[0];
 	destroyActions( &actions, targetAction );
 
 	return targetAction;
@@ -36,7 +36,7 @@ Action* State::getProbabilisticAction()
 	float randomFloat = ( float )rand() / RAND_MAX;
 	float cumulativeProb = 0.0f;
 
-	std::vector<Action*> actions( MAX_ACTIONS );
+	std::vector<Action*> actions( NUM_AVERAGE_ACTIONS );
 	computeActions( &actions );
 	
 	for( int i = 0; i < ( int )actions.size(); i++ )

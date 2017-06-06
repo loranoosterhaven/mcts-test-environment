@@ -40,6 +40,8 @@ void TicTacToeState::computeActions( std::vector<Action*>* actions )
 		if( board[i] == PLAYER_NONE )
 			actions->push_back( new TicTacToeAction( i ) );
 	}
+
+	std::random_shuffle( actions->begin(), actions->end() );
 }
 
 void TicTacToeState::transitionModel( Action* action )

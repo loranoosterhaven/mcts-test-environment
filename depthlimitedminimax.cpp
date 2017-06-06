@@ -11,7 +11,7 @@ SearchResult* DepthLimitedMinimaxSearch::search( State* state )
 	HeuristicState* usedState = ( HeuristicState* )state->clone();
 
 	// Compute all the actions from the current state.
-	std::vector<Action*> actions( MAX_ACTIONS );
+	std::vector<Action*> actions( NUM_AVERAGE_ACTIONS );
 	usedState->computeActions( &actions );
 
 	int bestActionIndex = 0;
@@ -60,7 +60,7 @@ float DepthLimitedMinimaxSearch::maxValue( HeuristicState* state, int depth )
 
 	HeuristicState* usedState = ( HeuristicState* )state->clone();
 
-	std::vector<Action*> actions( MAX_ACTIONS );
+	std::vector<Action*> actions( NUM_AVERAGE_ACTIONS );
 	usedState->computeActions( &actions );
 
 	for( int i = 0; i < ( int )actions.size(); i++ )
@@ -95,7 +95,7 @@ float DepthLimitedMinimaxSearch::minValue( HeuristicState* state, int depth )
 
 	HeuristicState* usedState = ( HeuristicState* )state->clone();
 
-	std::vector<Action*> actions( MAX_ACTIONS );
+	std::vector<Action*> actions( NUM_AVERAGE_ACTIONS );
 	usedState->computeActions( &actions );
 
 	for( int i = 0; i < ( int )actions.size(); i++ )

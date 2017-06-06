@@ -190,6 +190,10 @@ void BackgammonState::computeActions( std::vector<Action*>* actions )
 
 		actions->push_back( action );
 	}
+	else
+	{
+		std::random_shuffle( actions->begin(), actions->end() );
+	}
 }
 
 void BackgammonState::transitionModel( Action* action )

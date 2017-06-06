@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <ctime>
 #include <limits>
+#include <algorithm>
 
 #include "state.h"
 #include "node.h"

@@ -20,6 +20,8 @@ void NimState::computeActions( std::vector<Action*>* actions )
 
 		actions->push_back( action );
 	}
+
+	std::random_shuffle( actions->begin(), actions->end() );
 }
 
 void NimState::transitionModel( Action* action )
