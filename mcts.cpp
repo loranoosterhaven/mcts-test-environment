@@ -17,7 +17,7 @@ SearchResult* MCTS::search( State* state )
 
 	// Run until computational budget is reached.
 	while( ( budgetInMs && endClock - startClock < computationalBudgetClock ) 
-		|| ( !budgetInMs && numIterations < computationalBudgetClock ) )
+		|| ( !budgetInMs && numIterations < computationalBudget ) )
 	{
 		// Select a child according to the tree policy.
 		Node* selection = treePolicy( root );

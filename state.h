@@ -5,7 +5,7 @@
 #ifndef STATE_H
 #define STATE_H
 
-#define NUM_AVERAGE_ACTIONS 20
+#define NUM_AVERAGE_ACTIONS 10
 
 enum Player
 {

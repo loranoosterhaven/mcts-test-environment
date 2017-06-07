@@ -26,8 +26,8 @@ public:
 class NimState : public State
 {
 public:
-	NimState( int chips ) 
-		: chips( chips ) { numPlayers = 2; turn = PLAYER_PLAYER1; };
+	NimState( int chips, int maxTakeChips ) 
+		: chips( chips ), maxTakeChips( maxTakeChips ) { numPlayers = 2; turn = PLAYER_PLAYER1; };
 	
 	virtual void print();
 
@@ -39,9 +39,11 @@ public:
 
 	virtual State* clone();
 	virtual void copy( State* state );
+	int getOptimalChips() { return chips % ( maxTakeChips + 1 ); }
 
 private:
 	int chips;
+	int maxTakeChips;
 };
 
 #endif

@@ -7,13 +7,20 @@
 void NimState::print()
 {
 	printf( "Chips: %d Turn: Player %d\n", chips, turn + 1 );
+
+	int optimalMove = chips % ( maxTakeChips + 1 );
+
+	if( optimalMove > 0 )
+		printf( "Optimal action: Take %d\n", chips % ( maxTakeChips + 1 ) );
+	else
+		printf( "Optimal action: Take any chips between [1..%d]\n", maxTakeChips );
 }
 
 void NimState::computeActions( std::vector<Action*>* actions )
 {
 	actions->clear();
 
-	for( int i = 1; i <= std::min( 3, chips ); i++ )
+	for( int i = 1; i <= std::min( maxTakeChips, chips ); i++ )
 	{
 		NimAction* action = new NimAction();
 		action->chips = i;
@@ -41,7 +48,7 @@ std::vector<float> NimState::utility()
 {
 	std::vector<float> result(numPlayers);
 
-	if( turn == PLAYER_PLAYER1 )
+	if( turn != PLAYER_PLAYER1 )
 	{
 		result[PLAYER_PLAYER1] = 1.0f;
 		result[PLAYER_PLAYER2] = 0.0f;

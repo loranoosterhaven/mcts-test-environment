@@ -39,9 +39,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="search.h">
-      <Filter>Search</Filter>
-    </ClInclude>
     <ClInclude Include="randomsearch.h">
       <Filter>Search</Filter>
     </ClInclude>
@@ -70,6 +67,9 @@
       <Filter>Search\MCTS</Filter>
     </ClInclude>
     <ClInclude Include="nimstate.h">
+      <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="search.h">
       <Filter>State</Filter>
     </ClInclude>
   </ItemGroup>
