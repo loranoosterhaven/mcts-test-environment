@@ -5,11 +5,18 @@
 #ifndef MCTS_H
 #define MCTS_H
 
+enum EThreadState
+{
+	THREAD_IDLE,
+	THREAD_WORKING,
+	THREAD_SHUTDOWN
+};
+
 class MCTS : public Search
 {
 public:
-	MCTS( float positiveConstant, bool budgetInMs ) : 
-		computationalBudget( 0 ), simulationDepth( 0 ), positiveConstant( positiveConstant ), budgetInMs( budgetInMs ) {}
+	MCTS( float positiveConstant, bool budgetInMs, int numThreads, bool transpositions ) : 
+		computationalBudget( 0 ), simulationDepth( 0 ), positiveConstant( positiveConstant ), budgetInMs( budgetInMs ), numThreads( numThreads ), transpositions( transpositions ) {}
 
 	virtual SearchResult* search( State* state );
 
@@ -21,15 +28,21 @@ private:
 
 	Node* bestChild( Node* targetNode, float explorationScale );
 	Node* probablisticChild( Node* targetNode );
-
+	
 	std::vector<float> defaultPolicy( State* targetState );
 	void backup( Node* selection, std::vector<float>* deltaValue );
 
 private:
+	bool budgetInMs;
 	int computationalBudget;
+
 	int simulationDepth;
 	float positiveConstant;
-	bool budgetInMs;
+
+	int numThreads;
+
+	bool transpositions;
+	Node** transTable;
 };
 
 #endif

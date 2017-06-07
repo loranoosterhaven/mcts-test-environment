@@ -47,16 +47,24 @@ bool NimState::isTerminal()
 std::vector<float> NimState::utility()
 {
 	std::vector<float> result(numPlayers);
-
-	if( turn != PLAYER_PLAYER1 )
+	
+	if( isTerminal() )
 	{
-		result[PLAYER_PLAYER1] = 1.0f;
-		result[PLAYER_PLAYER2] = 0.0f;
+		if( turn != PLAYER_PLAYER1 )
+		{
+			result[PLAYER_PLAYER1] = 1.0f;
+			result[PLAYER_PLAYER2] = 0.0f;
+		}
+		else
+		{
+			result[PLAYER_PLAYER1] = 0.0f;
+			result[PLAYER_PLAYER2] = 1.0f;
+		}
 	}
 	else
 	{
 		result[PLAYER_PLAYER1] = 0.0f;
-		result[PLAYER_PLAYER2] = 1.0f;
+		result[PLAYER_PLAYER2] = 0.0f;
 	}
 
 	return result;

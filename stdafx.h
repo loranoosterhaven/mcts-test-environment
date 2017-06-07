@@ -14,6 +14,7 @@
 #include <ctime>
 #include <limits>
 #include <algorithm>
+#include <thread>
 
 #include "state.h"
 #include "node.h"

@@ -17,7 +17,7 @@ SearchResult* MCTS::search( State* state )
 
 	// Run until computational budget is reached.
 	while( ( budgetInMs && endClock - startClock < computationalBudgetClock ) 
-		|| ( !budgetInMs && numIterations < computationalBudget ) )
+		|| ( !budgetInMs && numIterations < computationalBudgetClock ) )
 	{
 		// Select a child according to the tree policy.
 		Node* selection = treePolicy( root );
@@ -167,7 +167,7 @@ void MCTS::backup( Node* selection, std::vector<float>* deltaValue )
 	// Update all parent nodes based on the obtained estimate.
 	while( current != NULL )
 	{
-		current->update( deltaValue );
+		current->update( deltaValue, numThreads );
 		current = current->getParent();
 	}
 }

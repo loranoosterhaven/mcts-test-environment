@@ -54,7 +54,7 @@ void simulateGames()
 	{
 		State* state = new NimState( 21, 3 );
 
-		MCTS* mcts = new MCTS( 1 / sqrtf( 2.0f ), false );
+		MCTS* mcts = new MCTS( 1 / sqrtf( 2.0f ), false, 1, false );
 		mcts->setComputationalBudget( 300000 );
 		mcts->setSimulationDepth( 1000 );
 
@@ -102,40 +102,51 @@ void simulateGames()
 
 void simulateNimMoves()
 {
-	int numChips = 50;
+	int numChips = 21;
 	int maxChips = 3;
-	int maxMoves = 100;
+	int maxSimulations = 100;		
+	int computationalBudget = 60000;
 
 	NimState* nimState = new NimState( numChips, maxChips );
-	printf( "Simulating %d searches of the initial Nim with n=%d and k=%d\n\nBudget rate:\tOptimal rate:", maxMoves, numChips, maxChips );
-		
-	MCTS* mcts = new MCTS( 1 / sqrtf( 2.0f ), false );
-	mcts->setSimulationDepth( 1000 );
 
-	for( int j = 1; j <= 100; j++ )
+	int optimalChips = nimState->getOptimalChips();
+
+	if( optimalChips == 0 )
 	{
-		mcts->setComputationalBudget( j * 5000 );
-	
-		int numWrongMoves = 0;
-		
-		for( int i = 0; i < maxMoves; i++ )
-		{
-			SearchResult* result = mcts->search( nimState );
+		printf( "Wrong choice of chips.\n" );
 
-			NimAction* nimAction = ( NimAction* )result->bestAction;
+		delete nimState;
 
-			int optimalChips = nimState->getOptimalChips();
-
-			if( optimalChips != nimAction->chips )
-				numWrongMoves++;
-		
-			delete result;
-		}
-
-		float optimalRate = ( float )( maxMoves - numWrongMoves ) / ( float )maxMoves;
-		printf( "\n%12d\t%.4f", j * 5000, optimalRate );
+		return;
 	}
 
+	printf( "Simulating %d searches of the initial Nim with n=%d and k=%d\n\n", maxSimulations, numChips, maxChips );
+
+
+	MCTS* mcts = new MCTS( 1 / sqrtf( 2.0f ), false, 1, false );
+	mcts->setSimulationDepth( 1000 );
+	mcts->setComputationalBudget( computationalBudget );
+	
+	int numWrongMoves = 0;
+		
+	for( int i = 0; i < maxSimulations; i++ )
+	{
+		SearchResult* result = mcts->search( nimState );
+
+		NimAction* nimAction = ( NimAction* )result->bestAction;
+			
+		if( optimalChips != nimAction->chips )
+		{
+			printf( "Wrong move.\n" );
+			numWrongMoves++;
+		}
+		else
+			printf( "Correct move.\n" );
+
+		delete result;
+	}
+
+	delete nimState;
 	delete mcts;
 }
 
