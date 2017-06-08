@@ -20,7 +20,7 @@ public:
 
 	virtual SearchResult* search( State* state );
 
-	void setComputationalBudget( int computationalBudget ) { this->computationalBudget = computationalBudget; }
+	void setComputationalBudget( long computationalBudget ) { this->computationalBudget = computationalBudget; }
 	void setSimulationDepth( int simulationDepth ) { this->simulationDepth = simulationDepth; }
 
 private:
@@ -34,7 +34,7 @@ private:
 
 private:
 	bool budgetInMs;
-	int computationalBudget;
+	long computationalBudget;
 
 	int simulationDepth;
 	float positiveConstant;

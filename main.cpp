@@ -105,7 +105,8 @@ void simulateNimMoves()
 	int numChips = 21;
 	int maxChips = 3;
 	int maxSimulations = 100;		
-	int computationalBudget = 60000;
+	
+	long computationalBudget = 40000;
 
 	NimState* nimState = new NimState( numChips, maxChips );
 
@@ -137,14 +138,16 @@ void simulateNimMoves()
 			
 		if( optimalChips != nimAction->chips )
 		{
-			printf( "Wrong move.\n" );
+			printf( "%d: Wrong move.\n", i );
 			numWrongMoves++;
 		}
 		else
-			printf( "Correct move.\n" );
+			printf( "%d: Correct move.\n", i );
 
 		delete result;
 	}
+
+	printf( "\nOptimal move rate %.2f\n", 1.0f - ( ( float )numWrongMoves / ( float )maxSimulations ) );
 
 	delete nimState;
 	delete mcts;

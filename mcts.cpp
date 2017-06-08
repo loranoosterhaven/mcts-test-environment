@@ -12,7 +12,7 @@ SearchResult* MCTS::search( State* state )
 	std::clock_t startClock = std::clock();
 	std::clock_t endClock = startClock;
 
-	int computationalBudgetClock = computationalBudget * CLOCKS_PER_SEC / 1000;
+	long computationalBudgetClock = computationalBudget * CLOCKS_PER_SEC / 1000;
 	int numIterations = 0;
 
 	// Run until computational budget is reached.
