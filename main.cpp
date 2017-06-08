@@ -106,7 +106,7 @@ void simulateNimMoves()
 	int maxChips = 3;
 	int maxSimulations = 100;		
 	
-	long computationalBudget = 40000;
+	long computationalBudget = 45000;
 
 	NimState* nimState = new NimState( numChips, maxChips );
 
