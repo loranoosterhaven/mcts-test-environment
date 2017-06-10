@@ -135,11 +135,13 @@ void simulateNimMoves()
 		for( int i = 0; i < maxSimulations; i++ )
 		{
 			SearchResult* result = mcts->search( nimState );
-
+			
 			NimAction* nimAction = ( NimAction* )result->bestAction;
 			
 			if( optimalChips != nimAction->chips )
 				numWrongMoves++;
+			
+			printf( "Search %d with budget %ld done!\n", i, computationalBudget );
 
 			delete result;
 		}
@@ -161,9 +163,9 @@ int main( int argc, char* argv[] )
 	srand( ( unsigned int )std::time( NULL ) );
 
 	char fileName[40];
-	sprintf( fileName, "output%d.txt", time( NULL ) );
+	sprintf( fileName, "output%d.txt", ( int )time( NULL ) );
 	OutputFile = fopen( fileName, "w+" );
-
+	
 	simulateNimMoves();
 
 	fclose( OutputFile );
