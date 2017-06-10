@@ -4,7 +4,7 @@
 
 #include "stdafx.h"
 
-#define PRINT( format, ... ) { fprintf( OutputFile, format, __VA_ARGS__ ); printf( format, __VA_ARGS__ ); }
+#define PRINT( format, ... ) fprintf( OutputFile, format, __VA_ARGS__ ); printf( format, __VA_ARGS__ )
 
 FILE* OutputFile = NULL;
 
@@ -164,7 +164,7 @@ int main( int argc, char* argv[] )
 
 	char fileName[40];
 	sprintf( fileName, "output%d.txt", time( NULL ) );
-	fopen_s( &OutputFile, fileName, "w+" );
+	OutputFile = fopen( fileName, "w+" );
 
 	simulateNimMoves();
 
