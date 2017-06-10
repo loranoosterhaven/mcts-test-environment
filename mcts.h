@@ -5,12 +5,16 @@
 #ifndef MCTS_H
 #define MCTS_H
 
+#define SIMULATION_SCALE 10
+
 enum EThreadState
 {
 	THREAD_IDLE,
 	THREAD_WORKING,
 	THREAD_SHUTDOWN
 };
+
+extern int* wrongMoves;
 
 class MCTS : public Search
 {
@@ -20,7 +24,7 @@ public:
 
 	virtual SearchResult* search( State* state );
 
-	void setComputationalBudget( long computationalBudget ) { this->computationalBudget = computationalBudget; }
+	void setComputationalBudget( long long computationalBudget ) { this->computationalBudget = computationalBudget; }
 	void setSimulationDepth( int simulationDepth ) { this->simulationDepth = simulationDepth; }
 
 private:
@@ -34,7 +38,7 @@ private:
 
 private:
 	bool budgetInMs;
-	long computationalBudget;
+	long long computationalBudget;
 
 	int simulationDepth;
 	float positiveConstant;

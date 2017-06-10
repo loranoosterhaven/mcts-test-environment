@@ -25,7 +25,7 @@ public:
 public:
 	Action* bestAction;
 	State* bestState;
-	int mctsIterations;
+	long long mctsIterations;
 };
 
 class Search

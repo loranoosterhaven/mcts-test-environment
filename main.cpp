@@ -107,54 +107,72 @@ void simulateGames()
 void simulateNimMoves()
 {
 	int numChips = 21;
-	int maxChips = 3;
+	int maxChips = 4;
 	int maxSimulations = 1000;		
-	
-	MCTS* mcts = new MCTS( 1 / sqrtf( 2.0f ), false, 1, false );
+	int numCores = 1;
+	float positiveConstant = 1.0f / sqrtf( 2.0f );
+	bool transpositions = 0;
+	long long computationalBudget = 70000;
+		
+	MCTS* mcts = new MCTS( positiveConstant, false, numCores, transpositions );
 	mcts->setSimulationDepth( 20000 );
-		
-	for( int i = 1; i <= 60; i++ )
+
+	long numMeasurements = ( long )( computationalBudget / SIMULATION_SCALE );
+	wrongMoves = new int[numMeasurements];
+
+	memset( wrongMoves, 0, sizeof( int ) * numMeasurements );
+	NimState* nimState = new NimState( numChips, maxChips );
+
+	int optimalChips = nimState->getOptimalChips();
+
+	if( optimalChips == 0 )
 	{
-		long computationalBudget = i * 1000;
-
-		NimState* nimState = new NimState( numChips, maxChips );
-
-		int optimalChips = nimState->getOptimalChips();
-
-		if( optimalChips == 0 )
-		{
-			delete nimState;
-
-			return;
-		}
-
-		mcts->setComputationalBudget( computationalBudget );
-	
-		int numWrongMoves = 0;
-		
-		for( int i = 0; i < maxSimulations; i++ )
-		{
-			SearchResult* result = mcts->search( nimState );
-			
-			NimAction* nimAction = ( NimAction* )result->bestAction;
-			
-			if( optimalChips != nimAction->chips )
-				numWrongMoves++;
-			
-			printf( "Search %d with budget %ld done!\n", i, computationalBudget );
-
-			delete result;
-		}
-
-		float optimalRate = 1.0f - ( ( float )numWrongMoves / ( float )maxSimulations );
-
-		PRINT( "%.3f\t%ld\t%d\t%d\t%d\t%d\t%f\n", optimalRate, computationalBudget, numChips, maxChips, 1, 0, 1 / sqrtf( 2.0f ) );
-
-		fflush( OutputFile );
+		printf( "Wrong number of chips.\n" );
 
 		delete nimState;
+		
+		fclose( OutputFile );
+
+		return;
 	}
 
+	mcts->setComputationalBudget( computationalBudget );
+	
+	printf( "Starting simulations\n\n" );
+
+	int numWrongMoves = 0;
+		
+	for( int i = 0; i < maxSimulations; i++ )
+	{
+		SearchResult* result = mcts->search( nimState );
+			
+		if( i > 0 && i % 1000000 == 0 )
+			printf( "%d simulations remaining...\n", maxSimulations - i );
+
+		printf( "Search %d done current optimal rate (%.2f)\n", i + 1, 1.0f - ( ( float )wrongMoves[numMeasurements - 1] / ( float )( i + 1 ) ) );
+
+		delete result;
+	}
+
+	char fileName[40];
+	sprintf( fileName, "output-D%d-B%d.csv", numChips, maxChips );
+	OutputFile = fopen( fileName, "w+" );
+
+	PRINT( "optimalRate,iterations,maxDepth,branchingFactor,cores,transpositions,positiveConstant,chance\n" );
+
+	for( int i = 0; i < numMeasurements; i++ )
+	{
+		float optimalRate = 1.0f - ( ( float )wrongMoves[i] / ( float )maxSimulations );
+
+		PRINT( "%.3f,%ld,%d,%d,%d,%d,%f,%f\n", optimalRate, ( i + 1 ) * SIMULATION_SCALE, numChips, maxChips, numCores, ( int )transpositions, positiveConstant, 1.0f / ( float )maxChips );
+
+		if( optimalRate >= 0.999f )
+			break;
+	}
+	
+	fclose( OutputFile );
+
+	delete nimState;
 	delete mcts;
 }
 
@@ -162,14 +180,7 @@ int main( int argc, char* argv[] )
 {
 	srand( ( unsigned int )std::time( NULL ) );
 
-	char fileName[40];
-	sprintf( fileName, "output%d.txt", ( int )time( NULL ) );
-	OutputFile = fopen( fileName, "w+" );
-	
 	simulateNimMoves();
-
-	fclose( OutputFile );
-	getchar();
 
 	return 0;
 }

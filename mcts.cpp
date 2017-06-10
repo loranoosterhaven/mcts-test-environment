@@ -4,6 +4,8 @@
 
 #include "stdafx.h"
 
+int* wrongMoves = NULL;
+
 SearchResult* MCTS::search( State* state )
 {
 	// Create root node from target state.
@@ -12,8 +14,8 @@ SearchResult* MCTS::search( State* state )
 	std::clock_t startClock = std::clock();
 	std::clock_t endClock = startClock;
 
-	long computationalBudgetClock = computationalBudget * CLOCKS_PER_SEC / 1000;
-	int numIterations = 0;
+	long long computationalBudgetClock = computationalBudget * CLOCKS_PER_SEC / 1000;
+	long long numIterations = 0;
 
 	// Run until computational budget is reached.
 	while( ( budgetInMs && endClock - startClock < computationalBudgetClock ) 
@@ -30,6 +32,9 @@ SearchResult* MCTS::search( State* state )
 			
 		endClock = std::clock();
 
+		if( numIterations % SIMULATION_SCALE == 0 && ( ( NimAction* )bestChild( root, 0.0f )->getAppliedAction() )->chips != ( ( NimState* )state )->getOptimalChips() )
+			wrongMoves[numIterations / SIMULATION_SCALE]++;
+
 		numIterations++;
 	}
 
@@ -40,7 +45,7 @@ SearchResult* MCTS::search( State* state )
 	result->mctsIterations = numIterations;
 
 	// Store the search results.
-	if( bestNode->getAppliedAction() != NULL )
+	if( bestNode != NULL && bestNode->getAppliedAction() != NULL )
 	{
 		result->bestAction = bestNode->getAppliedAction()->clone();
 		result->bestState->transitionModel( result->bestAction );

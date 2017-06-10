@@ -11,7 +11,7 @@ SearchResult* MinimaxSearch::search( State* state )
 	State* usedState = state->clone();
 
 	// Compute all the actions from the current state.
-	std::vector<Action*> actions( NUM_AVERAGE_ACTIONS );
+	std::vector<Action*> actions( state->getAverageBranchingFactor() );
 	usedState->computeActions( &actions );
 
 	int bestActionIndex = 0;
@@ -53,7 +53,7 @@ float MinimaxSearch::maxValue( State* state )
 
 	State* usedState = state->clone();
 
-	std::vector<Action*> actions( NUM_AVERAGE_ACTIONS );
+	std::vector<Action*> actions( state->getAverageBranchingFactor() );
 	usedState->computeActions( &actions );
 
 	for( int i = 0; i < ( int )actions.size(); i++ )
@@ -83,7 +83,7 @@ float MinimaxSearch::minValue( State* state )
 
 	State* usedState = state->clone();
 
-	std::vector<Action*> actions( NUM_AVERAGE_ACTIONS );
+	std::vector<Action*> actions( state->getAverageBranchingFactor() );
 	usedState->computeActions( &actions );
 
 	for( int i = 0; i < ( int )actions.size(); i++ )

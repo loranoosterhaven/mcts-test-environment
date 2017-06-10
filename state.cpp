@@ -20,7 +20,7 @@ Action* State::getRandomAction()
 	if( turn == PLAYER_CHANCE )
 		return getProbabilisticAction();
 
-	std::vector<Action*> actions( NUM_AVERAGE_ACTIONS );
+	std::vector<Action*> actions( getAverageBranchingFactor() );
 	computeActions( &actions );
 
 	Action* targetAction = actions[0];
@@ -36,7 +36,7 @@ Action* State::getProbabilisticAction()
 	float randomFloat = ( float )rand() / RAND_MAX;
 	float cumulativeProb = 0.0f;
 
-	std::vector<Action*> actions( NUM_AVERAGE_ACTIONS );
+	std::vector<Action*> actions( getAverageBranchingFactor() );
 	computeActions( &actions );
 	
 	for( int i = 0; i < ( int )actions.size(); i++ )

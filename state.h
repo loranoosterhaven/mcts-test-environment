@@ -43,6 +43,7 @@ public:
 	
 	virtual int getActingPlayer() { return turn; }
 	int getNumPlayers() { return numPlayers; }
+	virtual int getAverageBranchingFactor() { return NUM_AVERAGE_ACTIONS; }
 
 protected:
 	int turn;
