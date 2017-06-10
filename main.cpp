@@ -123,8 +123,6 @@ void simulateNimMoves()
 
 		if( optimalChips == 0 )
 		{
-			PRINT( "Wrong choice of chips.\n" );
-
 			delete nimState;
 
 			return;
