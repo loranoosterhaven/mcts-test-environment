@@ -31,6 +31,9 @@ SearchResult* MCTS::search( State* state )
 		backup( selection, &deltaValue );
 			
 		endClock = std::clock();
+		
+		if( !budgetInMs && numIterations > 0 && numIterations % 1000000 == 0 )
+			printf( "%ld simulations remaining...\n", computationalBudgetClock - numIterations );
 
 		if( numIterations % SIMULATION_SCALE == 0 && ( ( NimAction* )bestChild( root, 0.0f )->getAppliedAction() )->chips != ( ( NimState* )state )->getOptimalChips() )
 			wrongMoves[numIterations / SIMULATION_SCALE]++;
@@ -62,23 +65,13 @@ Node* MCTS::treePolicy( Node* targetNode )
 
 	while( !selection->isTerminal() )
 	{
-		// Check whether or not it is a regular node or a chance node.
-		if( selection->getState()->getActingPlayer() == PLAYER_CHANCE )
-		{
-			// Select a child based on the probability distribution of the chance node.
-			if( !selection->isFullyExpanded() )
-				return selection->expand();
-			else
-				selection = probablisticChild( selection );
-		}
+		// If the current node is not fully expanded yet add an additional child. Else select based on some policy.
+		if( !selection->isFullyExpanded() )
+			return selection->expand();
+		else if( selection->getState()->getActingPlayer() == PLAYER_CHANCE )
+			selection = probablisticChild( selection );
 		else
-		{
-			// If the current node is not fully expanded yet add an additional child. Else select based on some policy.
-			if( !selection->isFullyExpanded() )
-				return selection->expand();
-			else
-				selection = bestChild( selection, positiveConstant );
-		}
+			selection = bestChild( selection, positiveConstant );
 	}
 
 	return selection;
@@ -127,6 +120,7 @@ Node* MCTS::probablisticChild( Node* targetNode )
 
     int numChildren = targetNode->getNumChildren();
 
+	// Pick a child based on the probability distribution.
     for( int i = 0; i < numChildren; i++ ) 
 	{
         Node* child = targetNode->getChild( i );

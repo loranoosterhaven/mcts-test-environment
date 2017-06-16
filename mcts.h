@@ -5,7 +5,7 @@
 #ifndef MCTS_H
 #define MCTS_H
 
-#define SIMULATION_SCALE 10
+#define SIMULATION_SCALE 50
 
 enum EThreadState
 {
@@ -26,6 +26,7 @@ public:
 
 	void setComputationalBudget( long long computationalBudget ) { this->computationalBudget = computationalBudget; }
 	void setSimulationDepth( int simulationDepth ) { this->simulationDepth = simulationDepth; }
+	void setPositiveConstant( float positiveConstant ) { this->positiveConstant = positiveConstant; }
 
 private:
 	Node* treePolicy( Node* targetNode );

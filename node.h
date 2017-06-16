@@ -17,7 +17,7 @@ public:
 	Node* getParent() { return parent; }
 
 	Node* getChild( int child );
-	int getNumChildren() { return children.size(); }
+	int getNumChildren() { return ( int )children.size(); }
 
 	State* getState() { return state; }
 
