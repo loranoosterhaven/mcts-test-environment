@@ -50,9 +50,9 @@ Node* Node::expand()
 	return child;
 }
 
-void Node::update( std::vector<float>* deltaValue, int numVisits )
+void Node::update( std::vector<float>* deltaValue )
 {
-	this->numVisits += numVisits;
+	this->numVisits++;
 
 	for( int i = 0; i < state->getNumPlayers(); i++ )
 		nodeValue[i] += ( *deltaValue )[i];

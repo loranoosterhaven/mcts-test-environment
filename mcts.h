@@ -19,8 +19,8 @@ extern int* wrongMoves;
 class MCTS : public Search
 {
 public:
-	MCTS( float positiveConstant, bool budgetInMs, int numThreads, bool transpositions ) : 
-		computationalBudget( 0 ), simulationDepth( 0 ), positiveConstant( positiveConstant ), budgetInMs( budgetInMs ), numThreads( numThreads ), transpositions( transpositions ) {}
+	MCTS( float positiveConstant, bool budgetInMs ) : 
+		computationalBudget( 0 ), simulationDepth( 0 ), positiveConstant( positiveConstant ), budgetInMs( budgetInMs ) {}
 
 	virtual SearchResult* search( State* state );
 
@@ -43,11 +43,6 @@ private:
 
 	int simulationDepth;
 	float positiveConstant;
-
-	int numThreads;
-
-	bool transpositions;
-	Node** transTable;
 };
 
 #endif

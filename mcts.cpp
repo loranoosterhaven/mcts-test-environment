@@ -98,7 +98,7 @@ Node* MCTS::bestChild( Node* targetNode, float explorationScale )
         float UCTExploration = sqrtf( 2.0f * logf( parentVisits ) / childVisits );
 
 		// Add the terms and scale the exploration term.
-        float UCTScore = UCTExploitation + explorationScale * UCTExploration;
+        float UCTScore = UCTExploitation + 2.0f * explorationScale * UCTExploration;
 
 		// Save the child with the highest UCT score.
         if( UCTScore > bestUCTScore )
@@ -166,7 +166,7 @@ void MCTS::backup( Node* selection, std::vector<float>* deltaValue )
 	// Update all parent nodes based on the obtained estimate.
 	while( current != NULL )
 	{
-		current->update( deltaValue, numThreads );
+		current->update( deltaValue );
 		current = current->getParent();
 	}
 }

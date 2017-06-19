@@ -19,7 +19,7 @@ void NimState::print()
 void NimState::computeActions( std::vector<Action*>* actions )
 {
 	actions->clear();
-
+	
 	for( int i = 1; i <= std::min( maxTakeChips, chips ); i++ )
 	{
 		NimAction* action = new NimAction();
@@ -27,6 +27,37 @@ void NimState::computeActions( std::vector<Action*>* actions )
 
 		actions->push_back( action );
 	}
+
+	// Player 2 always optimal.
+	/*if( turn == PLAYER_PLAYER1 )
+	{
+		for( int i = 1; i <= std::min( maxTakeChips, chips ); i++ )
+		{
+			NimAction* action = new NimAction();
+			action->chips = i;
+
+			actions->push_back( action );
+		}
+	}
+	else 
+	{
+		int optimalChips = getOptimalChips();
+
+		if( optimalChips != 0 )
+		{
+			NimAction* action = new NimAction();
+			action->chips = optimalChips;
+
+			actions->push_back( action );
+		}
+		else
+		{
+			NimAction* action = new NimAction();
+			action->chips = std::min( maxTakeChips, chips );
+
+			actions->push_back( action );
+		}
+	}*/
 
 	std::random_shuffle( actions->begin(), actions->end() );
 }

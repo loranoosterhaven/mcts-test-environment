@@ -58,7 +58,7 @@ void simulateGames()
 	{
 		State* state = new NimState( 7, 3 );
 
-		MCTS* mcts = new MCTS( 1 / sqrtf( 2.0f ), false, 1, false );
+		MCTS* mcts = new MCTS( 1 / sqrtf( 2.0f ), false );
 		mcts->setComputationalBudget( 300000 );
 		mcts->setSimulationDepth( 1000 );
 
@@ -106,64 +106,66 @@ void simulateGames()
 
 void simulateNimMoves()
 {
-	int maxSimulations = 1000;		
-	int numCores = 1;
-	float positiveConstant = 1.0f / sqrtf( 2.0f );
-	bool transpositions = 0;
-		
-	MCTS* mcts = new MCTS( positiveConstant, false, numCores, transpositions );
-	mcts->setSimulationDepth( 20000 );
-	
-	long long computationalBudget = 14000;
-
-	mcts->setComputationalBudget( computationalBudget );
-
-	int numChips = 18;
+	int numChips = 21;
 	int maxChips = 4;
+	int maxSimulations = 1000;		
+	float positiveConstant = 0.22f;
+	long long computationalBudget = 70000;
+		
+	MCTS* mcts = new MCTS( positiveConstant, false );
+	mcts->setSimulationDepth( 20000 );
 
+	long numMeasurements = ( long )( computationalBudget / SIMULATION_SCALE );
+	wrongMoves = new int[numMeasurements];
+
+	memset( wrongMoves, 0, sizeof( int ) * numMeasurements );
 	NimState* nimState = new NimState( numChips, maxChips );
 
 	int optimalChips = nimState->getOptimalChips();
 
 	if( optimalChips == 0 )
 	{
+		printf( "Wrong number of chips.\n" );
+
 		delete nimState;
+		
+		fclose( OutputFile );
+
 		return;
 	}
+
+	mcts->setComputationalBudget( computationalBudget );
 	
-	char fileName[40];
-	sprintf( fileName, "output-B%ld-N%d-K%d.csv", computationalBudget, numChips, maxChips );
-	OutputFile = fopen( fileName, "w+" );
-	
-	PRINT( "optimalRate,iterations,maxDepth,branchingFactor,cores,transpositions,positiveConstant,chance\n" );
+	printf( "Starting simulations\n\n" );
 
-	for( int p = 0; p < 300; p++ )
-	{
-		positiveConstant = ( float )p / 300.0f;
-
-		long numMeasurements = ( long )( computationalBudget / SIMULATION_SCALE );
-		wrongMoves = new int[numMeasurements];
-
-		memset( wrongMoves, 0, sizeof( int ) * numMeasurements );
-
-		mcts->setPositiveConstant( positiveConstant );
-
-		printf( "Starting simulations with maxDepth=%d maxBudget=%ld\n\n", numChips, computationalBudget );
-
-		int numWrongMoves = 0;
+	int numWrongMoves = 0;
 		
-		for( int i = 0; i < maxSimulations; i++ )
-		{
-			SearchResult* result = mcts->search( nimState );
+	for( int i = 0; i < maxSimulations; i++ )
+	{
+		SearchResult* result = mcts->search( nimState );
+			
+		if( i > 0 && i % 1000000 == 0 )
+			printf( "%d simulations remaining...\n", maxSimulations - i );
 
-			printf( "Search %d done current optimal rate (%.2f)\n", i + 1, 1.0f - ( ( float )wrongMoves[numMeasurements - 1] / ( float )( i + 1 ) ) );
+		printf( "Search %d done current optimal rate (%.2f)\n", i + 1, 1.0f - ( ( float )wrongMoves[numMeasurements - 1] / ( float )( i + 1 ) ) );
 
-			delete result;
-		}
+		delete result;
+	}
 
-		float optimalRate = 1.0f - ( ( float )wrongMoves[numMeasurements - 1] / ( float )maxSimulations );
+	char fileName[40];
+	sprintf( fileName, "output-D%d-B%d.csv", numChips, maxChips );
+	OutputFile = fopen( fileName, "w+" );
 
-		PRINT( "%.3f,%ld,%d,%d,%d,%d,%f,%f\n", optimalRate, numMeasurements * SIMULATION_SCALE, numChips, maxChips, numCores, ( int )transpositions, positiveConstant, 1.0f / ( float )maxChips );
+	PRINT( "optimalRate,iterations,maxDepth,branchingFactor,positiveConstant,chance\n" );
+
+	for( int i = 0; i < numMeasurements; i++ )
+	{
+		float optimalRate = 1.0f - ( ( float )wrongMoves[i] / ( float )maxSimulations );
+
+		PRINT( "%.3f,%ld,%d,%d,%f,%f\n", optimalRate, ( i + 1 ) * SIMULATION_SCALE, numChips, maxChips, positiveConstant, 1.0f / ( float )maxChips );
+
+		if( optimalRate >= 0.999f )
+			break;
 	}
 	
 	fclose( OutputFile );
@@ -220,16 +222,22 @@ int computeNumNodes( int n, int k )
 int main( int argc, char* argv[] )
 {
 	srand( ( unsigned int )std::time( NULL ) );
+	
+	/*char fileName[40];
+	sprintf( fileName, "nodes.csv" );
+	OutputFile = fopen( fileName, "w+" );
 
-	/*printf("n,k,nodes\n");
+	PRINT("n,k,nodes\n");
 
 	for( int i = 5; i <= 29; i++ )
 	{
-		for( int j = 2; j <= 10; j++ )
-			printf( "%d,%d,%d\n", i, j, computeNumNodes( i, j ) );
+		for( int j = 2; j <= i; j++ )
+		{
+			PRINT( "%d,%d,%d\n", i, j, computeNumNodes( i, j ) );
+		}
 	}
 
-	getchar();*/
+	fclose( OutputFile );*/
 
 	simulateNimMoves();
 

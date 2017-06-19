@@ -12,7 +12,7 @@ public:
 	~Node();
 
 	Node* expand();
-	void update( std::vector<float>* valueEstimate, int numVisits );
+	void update( std::vector<float>* valueEstimate );
 
 	Node* getParent() { return parent; }
 
