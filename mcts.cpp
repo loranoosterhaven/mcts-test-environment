@@ -43,6 +43,15 @@ SearchResult* MCTS::search( State* state )
 
 	Node* bestNode = bestChild( root, 0.0f );
 
+	int optimalDepth = 1;
+	Node* optimalDepthNode = bestNode;
+
+	while( optimalDepthNode != NULL )
+	{
+		optimalDepthNode = bestChild( optimalDepthNode, 0.0f );
+		optimalDepth++;
+	}
+
 	SearchResult* result = new SearchResult();
 	result->bestState = state->clone();
 	result->mctsIterations = numIterations;
@@ -139,8 +148,10 @@ std::vector<float> MCTS::defaultPolicy( State* targetState )
 {
 	State* simulationState = targetState->clone();
 
+	int depth = 0;
+
 	// Run simulations of from the target state up to a terminal state or a given depth.
-	for( int d = 0; d < simulationDepth; d++ )
+	while( depth < simulationDepth )
 	{
 		if( simulationState->isTerminal() )
 			break;
@@ -150,6 +161,8 @@ std::vector<float> MCTS::defaultPolicy( State* targetState )
 
 		simulationState->transitionModel( action );
 		delete action;
+
+		depth++;
 	}
 	
 	std::vector<float> result = simulationState->utility();

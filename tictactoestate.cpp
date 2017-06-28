@@ -141,3 +141,11 @@ void TicTacToeState::computeTerminal()
 		}
 	}
 }
+
+int TicTacToeState::getIntegerHash()
+{
+	printf( "TicTacToe: Integer has not implemented\n" );
+	exit( 0 );
+
+	return 0;
+}

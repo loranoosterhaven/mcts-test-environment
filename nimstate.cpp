@@ -110,3 +110,8 @@ void NimState::copy( State* state )
 {
 	*this = *( NimState* )state;
 }
+
+int NimState::getIntegerHash()
+{
+	return 200 * turn + chips;
+}

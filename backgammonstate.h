@@ -101,6 +101,8 @@ public:
 
 	virtual State* clone();
 	virtual void copy( State* state );
+		
+	virtual int getIntegerHash();
 
 	Dice throwDices();
 

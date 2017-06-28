@@ -382,3 +382,11 @@ Dice BackgammonState::throwDices()
 
 	return dice;
 }
+
+int BackgammonState::getIntegerHash()
+{
+	printf( "BackgammonState: Integer has not implemented\n" );
+	exit( 0 );
+
+	return 0;
+}

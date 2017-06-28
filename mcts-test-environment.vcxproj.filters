@@ -36,6 +36,12 @@
     <ClCompile Include="nimstate.cpp">
       <Filter>State</Filter>
     </ClCompile>
+    <ClCompile Include="transpositionmcts.cpp">
+      <Filter>Search\MCTS</Filter>
+    </ClCompile>
+    <ClCompile Include="vertex.cpp">
+      <Filter>Search\MCTS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -69,8 +75,14 @@
     <ClInclude Include="nimstate.h">
       <Filter>State</Filter>
     </ClInclude>
+    <ClInclude Include="transpositionmcts.h">
+      <Filter>Search\MCTS</Filter>
+    </ClInclude>
+    <ClInclude Include="vertex.h">
+      <Filter>Search\MCTS</Filter>
+    </ClInclude>
     <ClInclude Include="search.h">
-      <Filter>State</Filter>
+      <Filter>Search</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

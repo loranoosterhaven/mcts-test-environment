@@ -143,6 +143,8 @@
     </ClCompile>
     <ClCompile Include="tictactoestate.cpp" />
     <ClCompile Include="search.cpp" />
+    <ClCompile Include="transpositionmcts.cpp" />
+    <ClCompile Include="vertex.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="backgammonstate.h" />
@@ -157,6 +159,8 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="tictactoestate.h" />
     <ClInclude Include="search.h" />
+    <ClInclude Include="transpositionmcts.h" />
+    <ClInclude Include="vertex.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LICENSE" />

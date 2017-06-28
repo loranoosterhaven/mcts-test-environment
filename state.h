@@ -41,6 +41,8 @@ public:
 	virtual State* clone() = 0;
 	virtual void copy( State* state ) = 0;
 	
+	virtual int getIntegerHash() = 0;
+
 	virtual int getActingPlayer() { return turn; }
 	int getNumPlayers() { return numPlayers; }
 	virtual int getAverageBranchingFactor() { return NUM_AVERAGE_ACTIONS; }

@@ -41,6 +41,10 @@ public:
 	virtual void copy( State* state );
 	int getOptimalChips() { return chips % ( maxTakeChips + 1 ); }
 	virtual int getAverageBranchingFactor() { return maxTakeChips; }
+		
+	virtual int getIntegerHash();
+
+	int getChips() { return chips; }
 
 private:
 	int chips;

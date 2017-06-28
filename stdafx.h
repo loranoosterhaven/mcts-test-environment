@@ -15,11 +15,14 @@
 #include <limits>
 #include <algorithm>
 #include <thread>
+#include <map>
 
 #include "state.h"
 #include "node.h"
+#include "vertex.h"
 #include "search.h"
 #include "mcts.h"
+#include "transpositionmcts.h"
 #include "minimax.h"
 #include "depthlimitedminimax.h"
 #include "expectiminimax.h"

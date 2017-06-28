@@ -106,21 +106,21 @@ void simulateGames()
 
 void simulateNimMoves()
 {
-	int numChips = 21;
+	int numChips = 13;
 	int maxChips = 4;
 	int maxSimulations = 1000;		
-	float positiveConstant = 0.22f;
-	long long computationalBudget = 70000;
+	float positiveConstant = 0.220f;
+	long long computationalBudget = 30000;
 		
 	MCTS* mcts = new MCTS( positiveConstant, false );
-	mcts->setSimulationDepth( 20000 );
+	mcts->setSimulationDepth( 10000 );
 
 	long numMeasurements = ( long )( computationalBudget / SIMULATION_SCALE );
 	wrongMoves = new int[numMeasurements];
 
 	memset( wrongMoves, 0, sizeof( int ) * numMeasurements );
 	NimState* nimState = new NimState( numChips, maxChips );
-
+		
 	int optimalChips = nimState->getOptimalChips();
 
 	if( optimalChips == 0 )
@@ -139,11 +139,11 @@ void simulateNimMoves()
 	printf( "Starting simulations\n\n" );
 
 	int numWrongMoves = 0;
-		
+
 	for( int i = 0; i < maxSimulations; i++ )
 	{
 		SearchResult* result = mcts->search( nimState );
-			
+
 		if( i > 0 && i % 1000000 == 0 )
 			printf( "%d simulations remaining...\n", maxSimulations - i );
 
@@ -153,8 +153,8 @@ void simulateNimMoves()
 	}
 
 	char fileName[40];
-	sprintf( fileName, "output-D%d-B%d.csv", numChips, maxChips );
-	OutputFile = fopen( fileName, "w+" );
+	sprintf_s( fileName, "output-D%d-B%d.csv", numChips, maxChips );
+	fopen_s( &OutputFile, fileName, "w+" );
 
 	PRINT( "optimalRate,iterations,maxDepth,branchingFactor,positiveConstant,chance\n" );
 
